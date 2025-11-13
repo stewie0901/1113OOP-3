@@ -1,11 +1,9 @@
 name: junit
-
 on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,5 +17,7 @@ jobs:
       - name: Build and Test with JUnit
         run: |
           mkdir -p out
-          javac -d out -cp .:./lib/junit-platform-console-standalone.jar $(find src -name "*.java")
+          # 編譯 TicTacToe 和測試檔案
+          javac -d out -cp ./lib/junit-platform-console-standalone.jar TicTacToe.java TicTacToeTest.java
+          # 以 JUnit Platform Console 執行測試
           java -jar ./lib/junit-platform-console-standalone.jar --class-path out --scan-class-path
